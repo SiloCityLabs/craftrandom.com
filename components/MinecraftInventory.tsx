@@ -56,7 +56,7 @@ function MinecraftInventory() {
                         onClick={handleClick}
                         size="lg"
                     >
-                        <FontAwesomeIcon icon={faDice} />
+                        <FontAwesomeIcon icon={faDice} size="2x" />
                     </Button>
                 </Col>
             </Row>
