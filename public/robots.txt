@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: https://craftrandom.com/sitemap.xml
+Crawl-delay: 1

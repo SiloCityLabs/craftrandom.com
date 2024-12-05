@@ -1,0 +1,66 @@
+@tailwind utilities;
+
+#mc-header {
+  background-color: #62B243 !important;
+  color: #6B4733 !important;
+  margin-bottom: 25px;
+}
+
+#mc-header a {
+  color: #6B4733 !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Cutom Button Colors */
+
+/* Minecraft Green - #62B243 */
+.btn-minecraft {
+  color: #ffffff;
+  background-color: #62B243;
+  border-color: #305720;
+}
+
+.btn-minecraft:hover,
+.btn-minecraft:focus,
+.btn-minecraft:active,
+.btn-minecraft.active,
+.open .dropdown-toggle.btn-minecraft {
+  color: #ffffff;
+  background-color: #4C8734;
+  border-color: #305720;
+}
+
+.btn-minecraft:active,
+.btn-minecraft.active,
+.open .dropdown-toggle.btn-minecraft {
+  background-image: none;
+}
+
+.btn-minecraft.disabled,
+.btn-minecraft[disabled],
+fieldset[disabled] .btn-minecraft,
+.btn-minecraft.disabled:hover,
+.btn-minecraft[disabled]:hover,
+fieldset[disabled] .btn-minecraft:hover,
+.btn-minecraft.disabled:focus,
+.btn-minecraft[disabled]:focus,
+fieldset[disabled] .btn-minecraft:focus,
+.btn-minecraft.disabled:active,
+.btn-minecraft[disabled]:active,
+fieldset[disabled] .btn-minecraft:active,
+.btn-minecraft.disabled.active,
+.btn-minecraft[disabled].active,
+fieldset[disabled] .btn-minecraft.active {
+  background-color: #62B243;
+  border-color: #62B243;
+}
+
+.btn-minecraft .badge {
+  color: #62B243;
+  background-color: #ffffff;
+}
