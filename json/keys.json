@@ -1,12 +1,10 @@
 [
-  "item_id",
+  "numerical_id",
   "stackable",
   "max_stack_size",
-  "hardness",
-  "diggable",
-  "min_max_state_ids",
-  "numerical_id",
   "recipes_used_in",
+  "hardness",
   "material",
-  "legacy_item_id_1_12_2_and_below"
+  "diggable",
+  "min_max_state_ids"
 ]
