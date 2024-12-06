@@ -1,5 +1,5 @@
 import React from "react";
-import type Metadata from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.min.css';
 //TODO: Figure out why the css files arent loading
