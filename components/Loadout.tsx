@@ -2,15 +2,19 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+//Components
+import MinecraftInventory from "../components/MinecraftInventory";
 //Helpers
 import { generateSeed } from "../helpers/generateSeed";
 import { fetchArmorType } from "../helpers/fetchArmorType";
 import { fetchToolType } from "../helpers/fetchToolType";
+import { fetchItems } from "../helpers/fetchItems";
 
 function Loadout() {
     const [containerClass, setContainerClass] = useState("hidden");
     const [data, setData] = useState({
         seed: "",
+        items: [],
         armor: {
             helmet: "",
             chestplate: "",
@@ -29,12 +33,13 @@ function Loadout() {
         fetchLoadoutData(setData, setContainerClass);
     }, []);
 
-    const handleClick = async () => {
+    const handleClick = () => {
         fetchLoadoutData(setData, setContainerClass);
     };
 
     const {
         seed,
+        items,
         armor,
         tools
     } = data;
@@ -45,13 +50,8 @@ function Loadout() {
                 id="random-class"
                 className={`${containerClass} shadow-lg p-3 bg-body rounded`}
             >
-                <Row className="justify-content-md-center mb-4">
-                    <Col xs md="4" lg="3" className="text-center">
-                        <span className="fw-bolder fs-5">Seed:</span> <br />
-                        <span className="text-muted fs-6">{seed}</span>
-                    </Col>
-                </Row>
-                <hr />
+                <MinecraftInventory seed={seed} onClick={handleClick} invItems={items} />
+                {/* <hr />
                 <Row className="justify-content-md-center mb-5">
                     <Col xs md="6" lg="3" className="text-center">
                         <span className="fw-bolder fs-5">Helmet:</span> <br />
@@ -88,22 +88,17 @@ function Loadout() {
                         <span className="fw-bolder fs-5">Hoe:</span> <br />
                         <span className="text-muted fs-6">{tools.hoe}</span>
                     </Col>
-                </Row>
-                <Row className="justify-content-md-center">
-                    <Col xs md="8" lg="6" className="text-center">
-                        <Button variant="minecraft" href="#" onClick={handleClick}>
-                            Generate Loadout
-                        </Button>
-                    </Col>
-                </Row>
+                </Row> */}
             </Container>
         </>
     );
 }
 
 
-async function fetchLoadoutData(setData, setContainerClass) {
+function fetchLoadoutData(setData, setContainerClass) {
     try {
+        const items = fetchItems();
+        console.log('Loadout Items: ', items);
         const seed = generateSeed();
         const armor = {
             helmet: fetchArmorType('helmet'),
@@ -120,6 +115,7 @@ async function fetchLoadoutData(setData, setContainerClass) {
 
         setData({
             seed,
+            items,
             armor,
             tools
         });

@@ -1,9 +1,7 @@
 import React from "react";
 import Head from "next/head";
-import { Container, Row, Col } from 'react-bootstrap';
 import Header from "../components/Header";
 import Loadout from "../components/Loadout";
-import MinecraftInventory from "../components/MinecraftInventory";
 
 export default function Home() {
   return (
@@ -21,8 +19,6 @@ export default function Home() {
       </Head>
       <Header />
       <Loadout />
-      <MinecraftInventory />
-
     </>
   );
 }

@@ -67,3 +67,8 @@
     transform: translateY(1px);
     /* Slight downwards shift on click */
 }
+
+.mc-image {
+    height: auto;
+    width: 275%;
+}
