@@ -2,11 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 //Components
 import MinecraftInventory from "../components/MinecraftInventory";
-import CustomAlert from "./CustomAlert";
+import CustomAlert from "./bootstrap/CustomAlert";
 //Helpers
 import { generateSeed } from "../helpers/generateSeed";
 import { fetchItems } from "../helpers/fetchItems";
 import { MinecraftItem } from '../types/Minecraft';
+import { truncate } from "fs/promises";
 
 function Loadout() {
     const [containerClass, setContainerClass] = useState("hidden");
@@ -31,7 +32,11 @@ function Loadout() {
         fetchLoadoutData(setData, setContainerClass);
     };
 
+    const toggleCommand = () => {
+        setShowCode(!showCode);
+    };
 
+    const [showCode, setShowCode] = useState(true);
     const codeRef = useRef<HTMLPreElement>(null); // Reference for the code block
     const handleCopyCode = () => {
         if (codeRef.current) {
@@ -65,20 +70,22 @@ function Loadout() {
                         show: false
                     })}
                 />
-                <MinecraftInventory seed={seed} onClick={handleClick} invItems={items} />
-                <hr />
-                <Row className="justify-content-md-center">
-                    <Col md={8}>
-                        <code ref={codeRef}>
-                            {code}
-                        </code>
-                    </Col>
-                    <Col xs={12} className="text-center mt-2">
-                        <Button variant="minecraft" onClick={handleCopyCode}>
-                            Copy Code
-                        </Button>
-                    </Col>
-                </Row>
+                <MinecraftInventory seed={seed} onClick={handleClick} toggleCommand={toggleCommand} invItems={items} />
+                {showCode && <hr />}
+                {showCode && ( // Conditionally render the code row
+                    <Row id="give-command" className="justify-content-md-center">
+                        <Col md={8}>
+                            <code ref={codeRef}>
+                                {code}
+                            </code>
+                        </Col>
+                        <Col xs={12} className="text-center mt-2">
+                            <Button variant="minecraft" onClick={handleCopyCode}>
+                                Copy Code
+                            </Button>
+                        </Col>
+                    </Row>
+                )}
             </Container>
         </>
     );

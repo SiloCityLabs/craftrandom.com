@@ -1,13 +1,16 @@
-import React from 'react';
-import { Container, Row, Col, Button, Image } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDice } from '@fortawesome/free-solid-svg-icons';
+import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import '../public/styles/components/MinecraftInventory.css'; // Import your CSS file
 import { MinecraftItem } from '../types/Minecraft';
+//Components
+import CustomModal from './bootstrap/CustomModal';
 
 interface InventoryProps {
     seed: string;
     onClick: () => void;
+    toggleCommand: () => void;
     invItems?: MinecraftItem[];
 }
 
@@ -49,6 +52,14 @@ function MinecraftInventory(props: InventoryProps) {
         return slots;
     };
 
+    //Settings
+    const [showModal, setShowModal] = useState(false);
+    const handleModal = () => setShowModal(!showModal);
+    const handleSave = () => {
+        console.log('Save Settings');
+        handleModal();
+    };
+
     return (
         <Container className="minecraft-inventory">
             <Row className="seed">
@@ -63,15 +74,56 @@ function MinecraftInventory(props: InventoryProps) {
                 <Col xs={4} className="player-skin">
                 </Col>
                 <Col xs={1} className="offhand-slot mt-auto"></Col>
-                <Col xs={5} className="d-flex align-items-center">
-                    <Button
-                        variant="light" // Use a light variant as a base
-                        className="win98-button w-100"
-                        onClick={props.onClick}
-                        size="lg"
-                    >
-                        <FontAwesomeIcon icon={faDice} size="2x" />
-                    </Button>
+                <Col xs={5} className="d-flex flex-column justify-content-between">
+                    <Row id="settings">
+                        <Col xs={6}>
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={<Tooltip>Toggle Command</Tooltip>}
+                            >
+                                <Button
+                                    variant="light" // Use a light variant as a base
+                                    className="win98-button w-100"
+                                    onClick={props.toggleCommand}
+                                    size="lg"
+                                >
+                                    <FontAwesomeIcon icon={faClipboard} size="2x" />
+                                </Button>
+                            </OverlayTrigger>
+                        </Col>
+                        <Col xs={6}>
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={<Tooltip>Settings</Tooltip>}
+                            >
+                                <Button
+                                    variant="light" // Use a light variant as a base
+                                    className="win98-button w-100"
+                                    onClick={handleModal}
+                                    size="lg"
+                                >
+                                    <FontAwesomeIcon icon={faGears} size="2x" />
+                                </Button>
+                            </OverlayTrigger>
+                        </Col>
+                    </Row>
+                    <Row id="roll">
+                        <Col>
+                            <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip>ReRoll Loadout</Tooltip>}
+                            >
+                                <Button
+                                    variant="light" // Use a light variant as a base
+                                    className="win98-button w-100"
+                                    onClick={props.onClick}
+                                    size="lg"
+                                >
+                                    <FontAwesomeIcon icon={faDice} size="2x" />
+                                </Button>
+                            </OverlayTrigger>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
             <Row className="inventory-grid">
@@ -80,6 +132,14 @@ function MinecraftInventory(props: InventoryProps) {
             <Row className="crafting-grid">
                 {renderCraftingSlots()}
             </Row>
+            <CustomModal
+                show={showModal}
+                onClose={handleModal}
+                onSave={handleSave} // Pass the handleSave function
+                title="Settings"
+            >
+                <div>This is the settings modal</div>
+            </CustomModal>
         </Container>
     );
 }
