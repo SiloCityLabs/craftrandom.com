@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import '../public/styles/components/MinecraftInventory.css'; // Import your CSS file
@@ -58,6 +58,12 @@ function MinecraftInventory(props: InventoryProps) {
     const handleSave = () => {
         console.log('Save Settings');
         handleModal();
+    };
+    //Range
+    const [rangeValue, setRangeValue] = useState(18); // Initial value
+
+    const handleRangeChange = (event) => {
+        setRangeValue(parseInt(event.target.value, 10));
     };
 
     return (
@@ -138,7 +144,18 @@ function MinecraftInventory(props: InventoryProps) {
                 onSave={handleSave} // Pass the handleSave function
                 title="Settings"
             >
-                <div>This is the settings modal</div>
+                <Row>
+                    <Col>
+                        <Form.Label htmlFor="my-range">My Range ({rangeValue})</Form.Label>
+                        <Form.Range
+                            id="my-range"
+                            min={0} // Set minimum value
+                            max={36} // Set maximum value
+                            value={rangeValue}
+                            onChange={handleRangeChange}
+                        />
+                    </Col>
+                </Row>
             </CustomModal>
         </Container>
     );
