@@ -51,7 +51,7 @@ function Loadout() {
                 className={`${containerClass} shadow-lg p-3 bg-body rounded`}
             >
                 <MinecraftInventory seed={seed} onClick={handleClick} invItems={items} />
-                <hr />
+                {/* <hr />
                 <Row className="justify-content-md-center mb-5">
                     <Col xs md="6" lg="3" className="text-center">
                         <span className="fw-bolder fs-5">Helmet:</span> <br />
@@ -88,7 +88,7 @@ function Loadout() {
                         <span className="fw-bolder fs-5">Hoe:</span> <br />
                         <span className="text-muted fs-6">{tools.hoe}</span>
                     </Col>
-                </Row>
+                </Row> */}
             </Container>
         </>
     );
