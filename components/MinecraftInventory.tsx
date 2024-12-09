@@ -10,10 +10,12 @@ function MinecraftInventory() {
     const armorSlots = 4; // Number of armor slots
     const offhandSlot = 1; // Offhand slot
 
-    const renderInventorySlots = (): JSX.Element[] => { // Specify return type
-        const slots: JSX.Element[] = []; // Specify array type
+    const renderInventorySlots = (): JSX.Element[] => {
+        const slots: JSX.Element[] = [];
         for (let i = 0; i < inventorySlots; i++) {
-            slots.push(<Col key={i} xs={1} className="inventory-slot"></Col>);
+            slots.push(
+                <Col key={`inventory-slot-${i}`} xs={1} className="inventory-slot"></Col>
+            );
         }
         return slots;
     };
@@ -21,7 +23,9 @@ function MinecraftInventory() {
     const renderCraftingSlots = (): JSX.Element[] => {
         const slots: JSX.Element[] = [];
         for (let i = 0; i < craftingSlots; i++) {
-            slots.push(<Col key={i} xs={1} className="crafting-slot"></Col>);
+            slots.push(
+                <Col key={`crafting-slot-${i}`} xs={1} className="crafting-slot"></Col>
+            );
         }
         return slots;
     };
@@ -29,7 +33,9 @@ function MinecraftInventory() {
     const renderArmorSlots = (): JSX.Element[] => {
         const slots: JSX.Element[] = [];
         for (let i = 0; i < armorSlots; i++) {
-            slots.push(<Row><Col key={i} xs={12} className="armor-slot"></Col></Row>);
+            slots.push(
+                <Row key={`armor-slot-${i}`}><Col xs={12} className="crafting-slot"></Col></Row>
+            );
         }
         return slots;
     };
