@@ -161,17 +161,32 @@ function MinecraftInventory(props: InventoryProps) {
     );
 }
 
-function pushToArr(arr: JSX.Element[], props: InventoryProps, i: number, itemCount: number, type: string) {
+function pushToArr(
+    arr: JSX.Element[],
+    props: InventoryProps,
+    i: number,
+    itemCount: number,
+    type: string
+) {
     arr.push(
         <Col
             key={`${type}-slot-${i}`}
             xs={1}
             className={`${type}-slot d-flex align-items-center justify-content-center`}
         >
-            {props.invItems && props.invItems[itemCount] && ( // Conditional rendering
+            {props.invItems && props.invItems[itemCount] && (
                 <OverlayTrigger
                     placement="top"
-                    overlay={<Tooltip>{props.invItems && props.invItems[itemCount] ? props.invItems[itemCount].name : "Empty Slot"}</Tooltip>}
+                    overlay={
+                        <Tooltip id={`${type}-tooltip-${i}`}> {/* Add unique ID to Tooltip */}
+                            {props.invItems[itemCount].name}
+                            {props.invItems[itemCount].amount && props.invItems[itemCount]?.amount > 1 && (
+                                <>
+                                    {" "} - {props.invItems[itemCount].amount}
+                                </>
+                            )}
+                        </Tooltip>
+                    }
                 >
                     <Image
                         src={`/images/items/${props.invItems[itemCount].image}`}

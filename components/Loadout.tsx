@@ -100,7 +100,7 @@ function fetchLoadoutData(setData, setContainerClass) {
         let code = '/give @s ';
 
         items.forEach((item: MinecraftItem) => {
-            code += `${item.item_id} `;
+            code += `${item.item_id} ${item.amount > 1 ? item.amount : ''} `;
         });
 
 
