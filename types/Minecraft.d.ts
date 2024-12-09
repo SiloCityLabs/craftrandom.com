@@ -2,6 +2,7 @@ export type MinecraftItem = {
     name: string;
     image: string;
     item_id: string;
+    amount: number;
     additional_info: MinecraftItemAddInfo;
 }
 

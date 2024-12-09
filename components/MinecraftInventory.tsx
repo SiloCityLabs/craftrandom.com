@@ -1,13 +1,16 @@
-import React from 'react';
-import { Container, Row, Col, Button, Image } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDice } from '@fortawesome/free-solid-svg-icons';
+import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import '../public/styles/components/MinecraftInventory.css'; // Import your CSS file
 import { MinecraftItem } from '../types/Minecraft';
+//Components
+import CustomModal from './bootstrap/CustomModal';
 
 interface InventoryProps {
     seed: string;
     onClick: () => void;
+    toggleCommand: () => void;
     invItems?: MinecraftItem[];
 }
 
@@ -49,6 +52,20 @@ function MinecraftInventory(props: InventoryProps) {
         return slots;
     };
 
+    //Settings
+    const [showModal, setShowModal] = useState(false);
+    const handleModal = () => setShowModal(!showModal);
+    const handleSave = () => {
+        console.log('Save Settings');
+        handleModal();
+    };
+    //Range
+    const [rangeValue, setRangeValue] = useState(18); // Initial value
+
+    const handleRangeChange = (event) => {
+        setRangeValue(parseInt(event.target.value, 10));
+    };
+
     return (
         <Container className="minecraft-inventory">
             <Row className="seed">
@@ -63,15 +80,56 @@ function MinecraftInventory(props: InventoryProps) {
                 <Col xs={4} className="player-skin">
                 </Col>
                 <Col xs={1} className="offhand-slot mt-auto"></Col>
-                <Col xs={5} className="d-flex align-items-center">
-                    <Button
-                        variant="light" // Use a light variant as a base
-                        className="win98-button w-100"
-                        onClick={props.onClick}
-                        size="lg"
-                    >
-                        <FontAwesomeIcon icon={faDice} size="2x" />
-                    </Button>
+                <Col xs={5} className="d-flex flex-column justify-content-between">
+                    <Row id="settings">
+                        <Col xs={6}>
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={<Tooltip>Toggle Command</Tooltip>}
+                            >
+                                <Button
+                                    variant="light" // Use a light variant as a base
+                                    className="win98-button w-100"
+                                    onClick={props.toggleCommand}
+                                    size="lg"
+                                >
+                                    <FontAwesomeIcon icon={faClipboard} size="2x" />
+                                </Button>
+                            </OverlayTrigger>
+                        </Col>
+                        <Col xs={6}>
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={<Tooltip>Settings</Tooltip>}
+                            >
+                                <Button
+                                    variant="light" // Use a light variant as a base
+                                    className="win98-button w-100"
+                                    onClick={handleModal}
+                                    size="lg"
+                                >
+                                    <FontAwesomeIcon icon={faGears} size="2x" />
+                                </Button>
+                            </OverlayTrigger>
+                        </Col>
+                    </Row>
+                    <Row id="roll">
+                        <Col>
+                            <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip>ReRoll Loadout</Tooltip>}
+                            >
+                                <Button
+                                    variant="light" // Use a light variant as a base
+                                    className="win98-button w-100"
+                                    onClick={props.onClick}
+                                    size="lg"
+                                >
+                                    <FontAwesomeIcon icon={faDice} size="2x" />
+                                </Button>
+                            </OverlayTrigger>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
             <Row className="inventory-grid">
@@ -80,27 +138,62 @@ function MinecraftInventory(props: InventoryProps) {
             <Row className="crafting-grid">
                 {renderCraftingSlots()}
             </Row>
+            <CustomModal
+                show={showModal}
+                onClose={handleModal}
+                onSave={handleSave} // Pass the handleSave function
+                title="Settings"
+            >
+                <Row>
+                    <Col>
+                        <Form.Label htmlFor="my-range">My Range ({rangeValue})</Form.Label>
+                        <Form.Range
+                            id="my-range"
+                            min={0} // Set minimum value
+                            max={36} // Set maximum value
+                            value={rangeValue}
+                            onChange={handleRangeChange}
+                        />
+                    </Col>
+                </Row>
+            </CustomModal>
         </Container>
     );
 }
 
-function pushToArr(arr: JSX.Element[], props: InventoryProps, i: number, itemCount: number, type: string) {
+function pushToArr(
+    arr: JSX.Element[],
+    props: InventoryProps,
+    i: number,
+    itemCount: number,
+    type: string
+) {
     arr.push(
         <Col
             key={`${type}-slot-${i}`}
             xs={1}
             className={`${type}-slot d-flex align-items-center justify-content-center`}
-            data-bs-placement="top"
-            title={
-                props.invItems && props.invItems[itemCount] ? props.invItems[itemCount].name : "Empty Slot"
-            } // Dynamic title
         >
-            {props.invItems && props.invItems[itemCount] && ( // Conditional rendering
-                <Image
-                    src={`/images/items/${props.invItems[itemCount].image}`}
-                    alt={props.invItems[itemCount].name}
-                    className="mc-image"
-                />
+            {props.invItems && props.invItems[itemCount] && (
+                <OverlayTrigger
+                    placement="top"
+                    overlay={
+                        <Tooltip id={`${type}-tooltip-${i}`}> {/* Add unique ID to Tooltip */}
+                            {props.invItems[itemCount].name}
+                            {props.invItems[itemCount].amount && props.invItems[itemCount]?.amount > 1 && (
+                                <>
+                                    {" "} - {props.invItems[itemCount].amount}
+                                </>
+                            )}
+                        </Tooltip>
+                    }
+                >
+                    <Image
+                        src={`/images/items/${props.invItems[itemCount].image}`}
+                        alt={props.invItems[itemCount].name}
+                        className="mc-image"
+                    />
+                </OverlayTrigger>
             )}
         </Col>
     );
