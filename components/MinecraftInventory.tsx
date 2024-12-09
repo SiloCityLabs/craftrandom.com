@@ -167,17 +167,18 @@ function pushToArr(arr: JSX.Element[], props: InventoryProps, i: number, itemCou
             key={`${type}-slot-${i}`}
             xs={1}
             className={`${type}-slot d-flex align-items-center justify-content-center`}
-            data-bs-placement="top"
-            title={
-                props.invItems && props.invItems[itemCount] ? props.invItems[itemCount].name : "Empty Slot"
-            } // Dynamic title
         >
             {props.invItems && props.invItems[itemCount] && ( // Conditional rendering
-                <Image
-                    src={`/images/items/${props.invItems[itemCount].image}`}
-                    alt={props.invItems[itemCount].name}
-                    className="mc-image"
-                />
+                <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip>{props.invItems && props.invItems[itemCount] ? props.invItems[itemCount].name : "Empty Slot"}</Tooltip>}
+                >
+                    <Image
+                        src={`/images/items/${props.invItems[itemCount].image}`}
+                        alt={props.invItems[itemCount].name}
+                        className="mc-image"
+                    />
+                </OverlayTrigger>
             )}
         </Col>
     );
