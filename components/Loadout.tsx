@@ -33,7 +33,7 @@ function Loadout() {
         fetchLoadoutData(setData, setContainerClass);
     }, []);
 
-    const handleClick = async () => {
+    const handleClick = () => {
         fetchLoadoutData(setData, setContainerClass);
     };
 
@@ -50,7 +50,7 @@ function Loadout() {
                 id="random-class"
                 className={`${containerClass} shadow-lg p-3 bg-body rounded`}
             >
-                <MinecraftInventory seed={seed} invItems={items} />
+                <MinecraftInventory seed={seed} onClick={handleClick} invItems={items} />
                 <hr />
                 <Row className="justify-content-md-center mb-5">
                     <Col xs md="6" lg="3" className="text-center">
@@ -89,20 +89,13 @@ function Loadout() {
                         <span className="text-muted fs-6">{tools.hoe}</span>
                     </Col>
                 </Row>
-                <Row className="justify-content-md-center">
-                    <Col xs md="8" lg="6" className="text-center">
-                        <Button variant="minecraft" href="#" onClick={handleClick}>
-                            Generate Loadout
-                        </Button>
-                    </Col>
-                </Row>
             </Container>
         </>
     );
 }
 
 
-async function fetchLoadoutData(setData, setContainerClass) {
+function fetchLoadoutData(setData, setContainerClass) {
     try {
         const items = fetchItems();
         console.log('Loadout Items: ', items);

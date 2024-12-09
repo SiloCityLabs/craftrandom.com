@@ -7,6 +7,7 @@ import { MinecraftItem } from '../types/Minecraft';
 
 interface InventoryProps {
     seed: string;
+    onClick: () => void;
     invItems?: MinecraftItem[];
 }
 
@@ -48,11 +49,6 @@ function MinecraftInventory(props: InventoryProps) {
         return slots;
     };
 
-
-    const handleClick = async () => {
-        console.log('Lets Roll');
-    };
-
     return (
         <Container className="minecraft-inventory">
             <Row className="seed">
@@ -71,7 +67,7 @@ function MinecraftInventory(props: InventoryProps) {
                     <Button
                         variant="light" // Use a light variant as a base
                         className="win98-button w-100"
-                        onClick={handleClick}
+                        onClick={props.onClick}
                         size="lg"
                     >
                         <FontAwesomeIcon icon={faDice} size="2x" />
