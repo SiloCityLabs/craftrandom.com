@@ -29,7 +29,7 @@ function MinecraftInventory(props: InventoryProps) {
     const renderInventorySlots = (): JSX.Element[] => {
         const inventory_slots: JSX.Element[] = [];
         for (let i = 0; i < inventorySlots; i++) {
-            pushToArr(inventory_slots, props, i, itemCount, 'inventory');
+            buildInventorySlot(inventory_slots, props, i, itemCount, 'inventory');
             itemCount++;
         }
         return inventory_slots;
@@ -38,7 +38,7 @@ function MinecraftInventory(props: InventoryProps) {
     const renderCraftingSlots = (): JSX.Element[] => {
         const crafting_slots: JSX.Element[] = [];
         for (let i = 0; i < craftingSlots; i++) {
-            pushToArr(crafting_slots, props, i, itemCount, 'crafting');
+            buildInventorySlot(crafting_slots, props, i, itemCount, 'crafting');
             itemCount++;
         }
         return crafting_slots;
@@ -167,7 +167,7 @@ function MinecraftInventory(props: InventoryProps) {
     );
 }
 
-function pushToArr(
+function buildInventorySlot(
     arr: JSX.Element[],
     props: InventoryProps,
     i: number,
@@ -178,27 +178,37 @@ function pushToArr(
         <Col
             key={`${type}-slot-${i}`}
             xs={1}
-            className={`${type}-slot d-flex align-items-center justify-content-center`}
+            className={`${type}-slot d-flex align-items-center justify-content-center position-relative`} // Add position-relative to Col
         >
             {props.invItems && props.invItems[itemCount] && (
                 <OverlayTrigger
                     placement="top"
                     overlay={
-                        <Tooltip id={`${type}-tooltip-${i}`}> {/* Add unique ID to Tooltip */}
+                        <Tooltip id={`${type}-tooltip-${i}`}>
                             {props.invItems[itemCount].name}
-                            {props.invItems[itemCount].amount && props.invItems[itemCount]?.amount > 1 && (
-                                <>
-                                    {" "} - {props.invItems[itemCount].amount}
-                                </>
-                            )}
+                            {props.invItems[itemCount].amount &&
+                                props.invItems[itemCount]?.amount > 1 && (
+                                    <>
+                                        {" "}
+                                        - {props.invItems[itemCount].amount}
+                                    </>
+                                )}
                         </Tooltip>
                     }
                 >
-                    <Image
-                        src={`/images/items/${props.invItems[itemCount].image}`}
-                        alt={props.invItems[itemCount].name}
-                        className="mc-image"
-                    />
+                    <div style={{ display: 'flex' }}> {/* Wrap the Image in a div */}
+                        <Image
+                            src={`/images/items/${props.invItems[itemCount].image}`}
+                            alt={props.invItems[itemCount].name}
+                            className="mc-image"
+                        />
+                        {props.invItems[itemCount].amount &&
+                            props.invItems[itemCount].amount > 1 && (
+                                <span className="amount-overlay">
+                                    {props.invItems[itemCount].amount}
+                                </span>
+                            )}
+                    </div>
                 </OverlayTrigger>
             )}
         </Col>
