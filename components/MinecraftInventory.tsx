@@ -186,13 +186,12 @@ function buildInventorySlot(
                     overlay={
                         <Tooltip id={`${type}-tooltip-${i}`}>
                             {props.invItems[itemCount].name}
-                            {props.invItems[itemCount].amount &&
-                                props.invItems[itemCount]?.amount > 1 && (
-                                    <>
-                                        {" "}
-                                        - {props.invItems[itemCount].amount}
-                                    </>
-                                )}
+                            {props.invItems[itemCount].amount && props.invItems[itemCount]?.amount > 1 && (
+                                <>
+                                    {" "}
+                                    - {props.invItems[itemCount].amount}
+                                </>
+                            )}
                         </Tooltip>
                     }
                 >
@@ -202,12 +201,11 @@ function buildInventorySlot(
                             alt={props.invItems[itemCount].name}
                             className="mc-image"
                         />
-                        {props.invItems[itemCount].amount &&
-                            props.invItems[itemCount].amount > 1 && (
-                                <span className="amount-overlay">
-                                    {props.invItems[itemCount].amount}
-                                </span>
-                            )}
+                        {props.invItems[itemCount].amount && props.invItems[itemCount].amount > 1 && (
+                            <span className="amount-overlay">
+                                {props.invItems[itemCount].amount}
+                            </span>
+                        )}
                     </div>
                 </OverlayTrigger>
             )}
