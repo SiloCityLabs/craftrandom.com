@@ -6,8 +6,9 @@ import CustomAlert from "./bootstrap/CustomAlert";
 //Helpers
 import { generateSeed } from "../helpers/generateSeed";
 import { fetchItems } from "../helpers/fetchItems";
-import { MinecraftItem } from '../types/Minecraft';
-import { truncate } from "fs/promises";
+import { getLocalStorage } from "../helpers/getLocalStorage";
+//Types
+import { MinecraftItem } from "../types/Minecraft";
 
 function Loadout() {
     const [containerClass, setContainerClass] = useState("hidden");
@@ -94,7 +95,8 @@ function Loadout() {
 
 function fetchLoadoutData(setData, setContainerClass) {
     try {
-        const items: MinecraftItem[] = fetchItems();
+        const settings = getLocalStorage('craftRandomSettings') ?? {};
+        const items: MinecraftItem[] = fetchItems(settings.rangeValue);
         console.log('Loadout Items: ', items);
         const seed = generateSeed();
         let code = '/give @s ';

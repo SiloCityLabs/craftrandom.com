@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
+//Css
 import '../public/styles/components/MinecraftInventory.css'; // Import your CSS file
+//Types
 import { MinecraftItem } from '../types/Minecraft';
 //Components
 import CustomModal from './bootstrap/CustomModal';
+//Helpers
+import { getLocalStorage } from '../helpers/getLocalStorage';
+import { setLocalStorage } from '../helpers/setLocalStorage';
 
 interface InventoryProps {
     seed: string;
@@ -15,7 +20,7 @@ interface InventoryProps {
 }
 
 function MinecraftInventory(props: InventoryProps) {
-    console.log('MinecraftInventory invItems:', props.invItems);
+    const settings = getLocalStorage('craftRandomSettings') ?? {};
     let itemCount = 0;
     const inventorySlots = 27; // Number of inventory slots
     const craftingSlots = 9; // Number of crafting slots
@@ -56,11 +61,12 @@ function MinecraftInventory(props: InventoryProps) {
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(!showModal);
     const handleSave = () => {
-        console.log('Save Settings');
+        settings.rangeValue = rangeValue;
+        setLocalStorage('craftRandomSettings', settings);
         handleModal();
     };
     //Range
-    const [rangeValue, setRangeValue] = useState(18); // Initial value
+    const [rangeValue, setRangeValue] = useState(settings.rangeValue ?? 36); // Initial value
 
     const handleRangeChange = (event) => {
         setRangeValue(parseInt(event.target.value, 10));
