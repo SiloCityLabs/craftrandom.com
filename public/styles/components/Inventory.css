@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     width: 500px;
+    margin: 0 auto;
 }
 
 .inventory-slot,
@@ -44,14 +45,56 @@
     max-width: 212px;
 }
 
+.off-hand-col {
+    display: flex;
+    /* Enable flexbox for the off-hand column */
+    flex-direction: column;
+    /* Align items vertically */
+    justify-content: flex-end;
+    /* Push the off-hand item to the bottom */
+}
+
 .hotbar {
     display: flex;
-    margin-bottom: 10px;
+    margin-top: 10px;
     justify-content: center;
 }
 
 .main-inventory {
     display: flex;
     flex-direction: row;
+    /* This should arrange items horizontally */
+    flex-wrap: wrap;
     justify-content: center;
+}
+
+.inventory-row {
+    display: flex;
+    /* Make each row a flex container */
+    flex-direction: row;
+    /* Arrange slots horizontally within the row */
+}
+
+/* Mobile Styling */
+@media (max-width: 768px) {
+
+    /* Adjust breakpoint as needed */
+    .inventory-container {
+        width: 375px;
+        /* Set width to 375px on smaller screens */
+    }
+
+    .inventory-slot,
+    .armor-slots,
+    .off-hand {
+        width: 45px;
+        /* Adjust slot size */
+        height: 45px;
+        /* Adjust slot size */
+    }
+
+    .skin-slot {
+        max-width: 184px;
+        /* Adjust skin slot width */
+    }
 }

@@ -18,22 +18,22 @@ function Inventory() {
                 </div>
             </div>
 
-            <div className="hotbar">
-                {Array.from({ length: 9 }).map((_, index) => (
-                    <div key={index} className="inventory-slot">
-                        {/* Add item content here */}
-                    </div>
-                ))}
-            </div>
-
             <div className="main-inventory">
-                {Array.from({ length: 9 }).map((_, rowIndex) => (
+                {Array.from({ length: 3 }).map((_, rowIndex) => (
                     <div key={rowIndex} className="inventory-row">
-                        {Array.from({ length: 3 }).map((_, colIndex) => (
+                        {Array.from({ length: 9 }).map((_, colIndex) => (
                             <div key={colIndex} className="inventory-slot">
                                 {/* Add item content here */}
                             </div>
                         ))}
+                    </div>
+                ))}
+            </div>
+
+            <div className="hotbar">
+                {Array.from({ length: 9 }).map((_, index) => (
+                    <div key={index} className="inventory-slot">
+                        {/* Add item content here */}
                     </div>
                 ))}
             </div>
