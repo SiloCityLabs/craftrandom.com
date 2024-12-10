@@ -15,3 +15,8 @@ type MinecraftItemAddInfo = {
     numerical_id?: string;
     stackable?: string;
 }
+
+export type MinecraftSettings = {
+    rangeValue: number;
+    showCommand: boolean;
+}

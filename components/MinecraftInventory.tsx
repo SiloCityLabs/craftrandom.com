@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
 //Css
 import '../public/styles/components/MinecraftInventory.css'; // Import your CSS file
 //Types
-import { MinecraftItem } from '../types/Minecraft';
+import { MinecraftItem, MinecraftSettings } from '../types/Minecraft';
 //Components
 import CustomModal from './bootstrap/CustomModal';
 //Helpers
-import { getLocalStorage } from '../helpers/getLocalStorage';
 import { setLocalStorage } from '../helpers/setLocalStorage';
 
 interface InventoryProps {
     seed: string;
     onClick: () => void;
     toggleCommand: () => void;
+    settings: MinecraftSettings;
     invItems?: MinecraftItem[];
 }
 
 function MinecraftInventory(props: InventoryProps) {
-    const settings = getLocalStorage('craftRandomSettings') ?? {};
     let itemCount = 0;
     const inventorySlots = 27; // Number of inventory slots
     const craftingSlots = 9; // Number of crafting slots
@@ -61,16 +60,17 @@ function MinecraftInventory(props: InventoryProps) {
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(!showModal);
     const handleSave = () => {
-        settings.rangeValue = rangeValue;
-        setLocalStorage('craftRandomSettings', settings);
+        props.settings.rangeValue = rangeValue;
+        setLocalStorage('craftRandomSettings', props.settings);
         handleModal();
     };
     //Range
-    const [rangeValue, setRangeValue] = useState(settings.rangeValue ?? 36); // Initial value
+    const [rangeValue, setRangeValue] = useState(props.settings.rangeValue); // Initial value
 
     const handleRangeChange = (event) => {
         setRangeValue(parseInt(event.target.value, 10));
     };
+
 
     return (
         <Container className="minecraft-inventory">

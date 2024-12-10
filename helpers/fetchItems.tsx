@@ -2,7 +2,7 @@ import dataList from "../json/items.json";
 import { randomListItem } from "./randomListItem";
 import { MinecraftItem } from "../types/Minecraft";
 
-export function fetchItems(amount: number = 36): MinecraftItem[] {
+export function fetchItems(amount: number): MinecraftItem[] {
     const items: MinecraftItem[] = [];
 
     for (let i = 0; i < amount; i++) {
