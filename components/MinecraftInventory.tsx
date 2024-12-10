@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
+//Css
 import '../public/styles/components/MinecraftInventory.css'; // Import your CSS file
-import { MinecraftItem } from '../types/Minecraft';
+//Types
+import { MinecraftItem, MinecraftSettings } from '../types/Minecraft';
 //Components
 import CustomModal from './bootstrap/CustomModal';
+//Helpers
+import { setLocalStorage } from '../helpers/setLocalStorage';
 
 interface InventoryProps {
     seed: string;
     onClick: () => void;
     toggleCommand: () => void;
+    settings: MinecraftSettings;
     invItems?: MinecraftItem[];
 }
 
 function MinecraftInventory(props: InventoryProps) {
-    console.log('MinecraftInventory invItems:', props.invItems);
     let itemCount = 0;
     const inventorySlots = 27; // Number of inventory slots
     const craftingSlots = 9; // Number of crafting slots
@@ -25,7 +29,7 @@ function MinecraftInventory(props: InventoryProps) {
     const renderInventorySlots = (): JSX.Element[] => {
         const inventory_slots: JSX.Element[] = [];
         for (let i = 0; i < inventorySlots; i++) {
-            pushToArr(inventory_slots, props, i, itemCount, 'inventory');
+            buildInventorySlot(inventory_slots, props, i, itemCount, 'inventory');
             itemCount++;
         }
         return inventory_slots;
@@ -34,7 +38,7 @@ function MinecraftInventory(props: InventoryProps) {
     const renderCraftingSlots = (): JSX.Element[] => {
         const crafting_slots: JSX.Element[] = [];
         for (let i = 0; i < craftingSlots; i++) {
-            pushToArr(crafting_slots, props, i, itemCount, 'crafting');
+            buildInventorySlot(crafting_slots, props, i, itemCount, 'crafting');
             itemCount++;
         }
         return crafting_slots;
@@ -56,15 +60,17 @@ function MinecraftInventory(props: InventoryProps) {
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(!showModal);
     const handleSave = () => {
-        console.log('Save Settings');
+        props.settings.rangeValue = rangeValue;
+        setLocalStorage('craftRandomSettings', props.settings);
         handleModal();
     };
     //Range
-    const [rangeValue, setRangeValue] = useState(18); // Initial value
+    const [rangeValue, setRangeValue] = useState(props.settings.rangeValue); // Initial value
 
     const handleRangeChange = (event) => {
         setRangeValue(parseInt(event.target.value, 10));
     };
+
 
     return (
         <Container className="minecraft-inventory">
@@ -161,7 +167,7 @@ function MinecraftInventory(props: InventoryProps) {
     );
 }
 
-function pushToArr(
+function buildInventorySlot(
     arr: JSX.Element[],
     props: InventoryProps,
     i: number,
@@ -172,27 +178,35 @@ function pushToArr(
         <Col
             key={`${type}-slot-${i}`}
             xs={1}
-            className={`${type}-slot d-flex align-items-center justify-content-center`}
+            className={`${type}-slot d-flex align-items-center justify-content-center position-relative`} // Add position-relative to Col
         >
             {props.invItems && props.invItems[itemCount] && (
                 <OverlayTrigger
                     placement="top"
                     overlay={
-                        <Tooltip id={`${type}-tooltip-${i}`}> {/* Add unique ID to Tooltip */}
+                        <Tooltip id={`${type}-tooltip-${i}`}>
                             {props.invItems[itemCount].name}
                             {props.invItems[itemCount].amount && props.invItems[itemCount]?.amount > 1 && (
                                 <>
-                                    {" "} - {props.invItems[itemCount].amount}
+                                    {" "}
+                                    - {props.invItems[itemCount].amount}
                                 </>
                             )}
                         </Tooltip>
                     }
                 >
-                    <Image
-                        src={`/images/items/${props.invItems[itemCount].image}`}
-                        alt={props.invItems[itemCount].name}
-                        className="mc-image"
-                    />
+                    <div style={{ display: 'flex' }}> {/* Wrap the Image in a div */}
+                        <Image
+                            src={`/images/items/${props.invItems[itemCount].image}`}
+                            alt={props.invItems[itemCount].name}
+                            className="mc-image"
+                        />
+                        {props.invItems[itemCount].amount && props.invItems[itemCount].amount > 1 && (
+                            <span className="amount-overlay">
+                                {props.invItems[itemCount].amount}
+                            </span>
+                        )}
+                    </div>
                 </OverlayTrigger>
             )}
         </Col>

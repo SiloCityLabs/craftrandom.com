@@ -71,4 +71,16 @@
 .mc-image {
     height: auto;
     width: 275%;
+    position: relative;
+    left: -6px;
+}
+
+.amount-overlay {
+    position: absolute;
+    bottom: -2px;
+    right: -1px;
+    color: white;
+    padding: 0px 2px;
+    font-size: 9px;
+    font-weight: 100;
 }

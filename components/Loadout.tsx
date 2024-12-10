@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 //Components
@@ -6,11 +8,19 @@ import CustomAlert from "./bootstrap/CustomAlert";
 //Helpers
 import { generateSeed } from "../helpers/generateSeed";
 import { fetchItems } from "../helpers/fetchItems";
-import { MinecraftItem } from '../types/Minecraft';
-import { truncate } from "fs/promises";
+import { getLocalStorage } from "../helpers/getLocalStorage";
+import { setLocalStorage } from "../helpers/setLocalStorage";
+//Types
+import { MinecraftItem, MinecraftSettings } from "../types/Minecraft";
+
+const defaultSettings: MinecraftSettings = { rangeValue: 1, showCommand: true };
 
 function Loadout() {
+    const [isLoading, setIsLoading] = useState(true);
+    const [settings, setSettings] = useState<MinecraftSettings>(defaultSettings);
     const [containerClass, setContainerClass] = useState("hidden");
+    const [showCommand, setShowCommand] = useState(true);
+    const codeRef = useRef<HTMLPreElement>(null); // Reference for the code block
     const [showAlert, setShowAlert] = useState<{ show: boolean; variant?: string; message?: string }>({
         show: false,
     });
@@ -24,20 +34,28 @@ function Loadout() {
         code: "",
     });
 
+
     useEffect(() => {
-        fetchLoadoutData(setData, setContainerClass);
+        const fetchData = async () => {
+            const storedSettings = getLocalStorage('craftRandomSettings') ?? settings;
+
+            setSettings(storedSettings);
+            setShowCommand(storedSettings.showCommand);
+
+            await fetchLoadoutData(setData, setContainerClass, storedSettings); // Wait for data fetching
+            setIsLoading(false); // Update isLoading after data is fetched
+        };
+
+        fetchData();
     }, []);
 
-    const handleClick = () => {
-        fetchLoadoutData(setData, setContainerClass);
-    };
-
+    //Hide/Show Command
     const toggleCommand = () => {
-        setShowCode(!showCode);
+        settings.showCommand = !showCommand;
+        setLocalStorage('craftRandomSettings', settings);
+        setShowCommand(settings.showCommand);
     };
 
-    const [showCode, setShowCode] = useState(true);
-    const codeRef = useRef<HTMLPreElement>(null); // Reference for the code block
     const handleCopyCode = () => {
         if (codeRef.current) {
             navigator.clipboard.writeText(codeRef.current.textContent || "");
@@ -56,6 +74,15 @@ function Loadout() {
         code
     } = data;
 
+    const handleClick = () => {
+        fetchLoadoutData(setData, setContainerClass, settings);
+    };
+
+    // Render loading state while fetching data
+    if (isLoading) {
+        return <div className="text-center">Loading...</div>;
+    }
+
     return (
         <>
             <Container
@@ -70,9 +97,9 @@ function Loadout() {
                         show: false
                     })}
                 />
-                <MinecraftInventory seed={seed} onClick={handleClick} toggleCommand={toggleCommand} invItems={items} />
-                {showCode && <hr />}
-                {showCode && ( // Conditionally render the code row
+                <MinecraftInventory seed={seed} onClick={handleClick} toggleCommand={toggleCommand} invItems={items} settings={settings} />
+                {showCommand && <hr />}
+                {showCommand && ( // Conditionally render the code row
                     <Row id="give-command" className="justify-content-md-center">
                         <Col md={8}>
                             <code ref={codeRef}>
@@ -92,10 +119,9 @@ function Loadout() {
 }
 
 
-function fetchLoadoutData(setData, setContainerClass) {
+function fetchLoadoutData(setData, setContainerClass, craftSettings) {
     try {
-        const items: MinecraftItem[] = fetchItems();
-        console.log('Loadout Items: ', items);
+        const items: MinecraftItem[] = fetchItems(craftSettings.rangeValue);
         const seed = generateSeed();
         let code = '/give @s ';
 
