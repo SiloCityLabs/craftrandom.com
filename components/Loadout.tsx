@@ -13,7 +13,7 @@ import { setLocalStorage } from "../helpers/setLocalStorage";
 //Types
 import { MinecraftItem, MinecraftSettings } from "../types/Minecraft";
 
-const defaultSettings: MinecraftSettings = { rangeValue: 1, showCommand: true };
+const defaultSettings: MinecraftSettings = { rangeValue: 36, showCommand: true };
 
 function Loadout() {
     const [isLoading, setIsLoading] = useState(true);
