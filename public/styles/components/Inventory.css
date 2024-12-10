@@ -54,26 +54,16 @@
     /* Push the off-hand item to the bottom */
 }
 
-.hotbar {
+.inv-row {
     display: flex;
+    justify-content: center;
+}
+
+.inv-row:last-child {
     margin-top: 10px;
-    justify-content: center;
+    margin-bottom: 5px;
 }
 
-.main-inventory {
-    display: flex;
-    flex-direction: row;
-    /* This should arrange items horizontally */
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.inventory-row {
-    display: flex;
-    /* Make each row a flex container */
-    flex-direction: row;
-    /* Arrange slots horizontally within the row */
-}
 
 /* Mobile Styling */
 @media (max-width: 768px) {
