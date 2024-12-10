@@ -2,12 +2,14 @@
 .inventory-container {
     background-color: #222;
     border: 2px solid #aaa;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
 }
 
 .inventory-slot,
 .armor-slots,
 .off-hand {
-    /* Include .armor-slots and .off-hand here */
     width: 50px;
     height: 50px;
     background-color: #555;
@@ -15,19 +17,41 @@
     margin: 2px;
 }
 
-.hotbar {
-    margin-bottom: 10px;
-}
-
 .top-row {
-    /* Add margin to the top row */
-    margin-bottom: 10px;
+    display: flex;
+    margin: 5px 5px 10px 5px;
 }
 
 .armor-slots-col {
+    display: flex;
+    flex-direction: column;
     padding: 0;
 }
 
 .armor-slots {
     margin-bottom: 4px;
+}
+
+.armor-slots:last-child {
+    margin-bottom: 0;
+}
+
+.skin-slot {
+    background-color: #555;
+    border: 1px solid #888;
+    margin: 2px 2px 0px 2px;
+    flex-grow: 1;
+    max-width: 212px;
+}
+
+.hotbar {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.main-inventory {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
