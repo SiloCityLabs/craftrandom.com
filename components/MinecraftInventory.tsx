@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } fro
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
 //Css
-import '../public/styles/components/MinecraftInventory.css'; // Import your CSS file
+import '../public/styles/components/MinecraftInventory.css';
 //Types
 import { MinecraftItem, MinecraftSettings } from '../types/Minecraft';
 //Components

@@ -1,0 +1,152 @@
+/* Inventory.css */
+.inventory-container {
+    background-color: #222;
+    border: 2px solid #aaa;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
+}
+
+#worldSeed {
+    color: white;
+}
+
+.inventory-container hr {
+    color: #888;
+}
+
+.inventory-slot,
+.armor-slots,
+.off-hand {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background-color: #555;
+    border: 1px solid #888;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.off-hand {
+    margin: 2px 2px 0 2px;
+}
+
+.amount-overlay {
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    font-size: 11px;
+    color: white;
+}
+
+.top-row {
+    display: flex;
+    margin: 5px 5px 10px 5px;
+}
+
+.armor-slots-col {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.armor-slots {
+    margin-bottom: 4px;
+}
+
+.armor-slots:last-child {
+    margin-bottom: 0;
+}
+
+.skin-slot {
+    background-color: #555;
+    border: 1px solid #888;
+    margin: 2px 2px 0px 2px;
+    flex-grow: 1;
+    max-width: 212px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.skin-slot img {
+    max-height: 200px;
+}
+
+.off-hand-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.inv-row {
+    display: flex;
+    justify-content: center;
+}
+
+.inv-row:last-child {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* Actions Section */
+.actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2px 1px 0 2px;
+    width: 159px;
+}
+
+.top-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.top-actions>* {
+    flex: 1;
+}
+
+.top-actions>*:first-child {
+    margin-right: 5px;
+}
+
+.action-button {
+    background-color: #555;
+    color: white;
+    border: 1px solid #888;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#rollBtn {
+    height: 50px;
+}
+
+/* Mobile Styling */
+@media (max-width: 768px) {
+
+    /* Adjust breakpoint as needed */
+    .inventory-container {
+        width: 375px;
+        /* Set width to 375px on smaller screens */
+    }
+
+    .inventory-slot,
+    .armor-slots,
+    .off-hand {
+        width: 45px;
+        /* Adjust slot size */
+        height: 45px;
+        /* Adjust slot size */
+    }
+
+    .skin-slot {
+        max-width: 184px;
+        /* Adjust skin slot width */
+    }
+}

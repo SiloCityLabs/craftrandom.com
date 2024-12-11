@@ -1,8 +1,55 @@
 [
-    "Leather Boots",
-    "Chainmail Boots",
-    "Iron Boots",
-    "Golden Boots",
-    "Diamond Boots",
-    "Netherite Boots"
+    {
+        "name": "Leather Boots",
+        "image": "leather_boots.png",
+        "item_id": "minecraft:leather_boots",
+        "additional_info": {
+            "numerical_id": "301",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Chainmail Boots",
+        "image": "chainmail_boots.png",
+        "item_id": "minecraft:chainmail_boots",
+        "additional_info": {
+            "numerical_id": "305",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Iron Boots",
+        "image": "iron_boots.png",
+        "item_id": "minecraft:iron_boots",
+        "additional_info": {
+            "numerical_id": "309",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Golden Boots",
+        "image": "golden_boots.png",
+        "item_id": "minecraft:golden_boots",
+        "additional_info": {
+            "numerical_id": "317",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Diamond Boots",
+        "image": "diamond_boots.png",
+        "item_id": "minecraft:diamond_boots",
+        "additional_info": {
+            "numerical_id": "313",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Netherite Boots",
+        "image": "netherite_boots.png",
+        "item_id": "minecraft:netherite_boots",
+        "additional_info": {
+            "stackable": "No"
+        }
+    }
 ]

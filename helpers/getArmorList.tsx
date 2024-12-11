@@ -1,14 +1,14 @@
 import helmetList from "../json/armor/helmet.json";
 import chestplateList from "../json/armor/chestplate.json";
-import leggingList from "../json/armor/leggings.json";
-import bootList from "../json/armor/boots.json";
+import leggingsList from "../json/armor/leggings.json";
+import bootsList from "../json/armor/boots.json";
 import horseList from "../json/armor/horse.json";
 
 const data: Record<string, any> = {
     helmet: helmetList,
     chestplate: chestplateList,
-    legging: leggingList,
-    boot: bootList,
+    leggings: leggingsList,
+    boots: bootsList,
     horse: horseList,
 };
 

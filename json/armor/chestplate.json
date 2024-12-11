@@ -1,8 +1,55 @@
 [
-    "Leather Tunic",
-    "Chainmail Chestplate",
-    "Iron Chestplate",
-    "Golden Chestplate",
-    "Diamond Chestplate",
-    "Netherite Chestplate"
+    {
+        "name": "Leather Tunic",
+        "image": "leather_chestplate.png",
+        "item_id": "minecraft:leather_chestplate",
+        "additional_info": {
+            "numerical_id": "299",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Chainmail Chestplate",
+        "image": "chainmail_chestplate.png",
+        "item_id": "minecraft:chainmail_chestplate",
+        "additional_info": {
+            "numerical_id": "303",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Iron Chestplate",
+        "image": "iron_chestplate.png",
+        "item_id": "minecraft:iron_chestplate",
+        "additional_info": {
+            "numerical_id": "307",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Golden Chestplate",
+        "image": "golden_chestplate.png",
+        "item_id": "minecraft:golden_chestplate",
+        "additional_info": {
+            "numerical_id": "315",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Diamond Chestplate",
+        "image": "diamond_chestplate.png",
+        "item_id": "minecraft:diamond_chestplate",
+        "additional_info": {
+            "numerical_id": "311",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Netherite Chestplate",
+        "image": "netherite_chestplate.png",
+        "item_id": "minecraft:netherite_chestplate",
+        "additional_info": {
+            "stackable": "No"
+        }
+    }
 ]
