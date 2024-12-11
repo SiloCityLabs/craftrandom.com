@@ -20,11 +20,33 @@ const Slots: React.FC<SlotsProps> = ({ items }) => {
                         if (currentItem) { // Check if currentItem is defined
                             return (
                                 <div key={slotIndex} className="inventory-slot">
-                                    <Image
-                                        src={`/images/items/${currentItem.image}`}
-                                        alt={currentItem.name}
-                                        className="mc-image"
-                                    />
+                                    <OverlayTrigger
+                                        placement="top"
+                                        overlay={
+                                            <Tooltip>
+                                                {currentItem.name}
+                                                {currentItem.amount && currentItem?.amount > 1 && (
+                                                    <>
+                                                        {" "}
+                                                        - {currentItem.amount}
+                                                    </>
+                                                )}
+                                            </Tooltip>
+                                        }
+                                    >
+                                        <div>
+                                            <Image
+                                                src={`/images/items/${currentItem.image}`}
+                                                alt={currentItem.name}
+                                                className="mc-image"
+                                            />
+                                            {currentItem.amount && currentItem.amount > 1 && (
+                                                <span className="amount-overlay">
+                                                    {currentItem.amount}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </OverlayTrigger>
                                 </div>
                             );
                         } else {
