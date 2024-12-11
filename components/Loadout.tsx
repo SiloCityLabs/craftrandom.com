@@ -13,27 +13,27 @@ import { setLocalStorage } from "../helpers/setLocalStorage";
 //Types
 import { MinecraftItem, MinecraftSettings } from "../types/Minecraft";
 
-const defaultSettings: MinecraftSettings = { rangeValue: 36, showCommand: true, rollArmor: true };
+const defaultSettings: MinecraftSettings = {
+    rangeValue: 36,
+    showCommand: true,
+    rollArmor: true
+};
 
 function Loadout() {
     const [isLoading, setIsLoading] = useState(true);
     const [settings, setSettings] = useState<MinecraftSettings>(defaultSettings);
-    const [containerClass, setContainerClass] = useState("hidden");
     const [showCommand, setShowCommand] = useState(true);
-    const codeRef = useRef<HTMLPreElement>(null); // Reference for the code block
-    const [showAlert, setShowAlert] = useState<{ show: boolean; variant?: string; message?: string }>({
-        show: false,
-    });
-    const [data, setData] = useState<{
+    const [showAlert, setShowAlert] = useState(false);
+    const codeRef = useRef<HTMLPreElement>(null);
+    const [loadout, setLoadout] = useState<{
         seed: string;
-        items: MinecraftItem[]; // Correct type for items
+        items: MinecraftItem[];
         code: string;
     }>({
         seed: "",
-        items: [], // Initialize as an empty array
+        items: [],
         code: "",
     });
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,104 +43,82 @@ function Loadout() {
             setSettings(completeSettings);
             setShowCommand(completeSettings.showCommand);
 
-            await fetchLoadoutData(setData, setContainerClass, completeSettings);
+            await generateLoadout(completeSettings);
             setIsLoading(false);
         };
 
         fetchData();
     }, []);
 
-    //Hide/Show Command
+    const generateLoadout = async (currentSettings: MinecraftSettings) => {
+        try {
+            const items = fetchItems(currentSettings.rangeValue);
+            const seed = generateSeed();
+            const code = generateGiveCommand(items);
+
+            setLoadout({ seed, items, code });
+        } catch (error: any) {
+            console.error("Error generating loadout:", error.message);
+        }
+    };
+
+    const generateGiveCommand = (items: MinecraftItem[]) => {
+        return '/give @s ' + items.map(item => `${item.item_id} ${item.amount > 1 ? item.amount : ''}`).join(' ');
+    };
+
     const toggleCommand = () => {
-        settings.showCommand = !showCommand;
-        setLocalStorage('craftRandomSettings', settings);
-        setShowCommand(settings.showCommand);
+        const updatedSettings = { ...settings, showCommand: !showCommand };
+        setSettings(updatedSettings);
+        setLocalStorage('craftRandomSettings', updatedSettings);
+        setShowCommand(updatedSettings.showCommand);
     };
 
     const handleCopyCode = () => {
         if (codeRef.current) {
             navigator.clipboard.writeText(codeRef.current.textContent || "");
-            // Show a success message
-            setShowAlert({
-                show: true,
-                variant: 'success',
-                message: 'Code copied to clipboard!'
-            });
+            setShowAlert(true);
         }
     };
 
-    const {
-        seed,
-        items,
-        code
-    } = data;
-
     const handleClick = () => {
-        fetchLoadoutData(setData, setContainerClass, settings);
+        generateLoadout(settings);
     };
 
-    // Render loading state while fetching data
     if (isLoading) {
         return <div className="text-center">Loading...</div>;
     }
 
     return (
-        <>
-            <Container
-                id="random-class"
-                className={`${containerClass} shadow-lg p-3 bg-body rounded`}
-            >
+        <Container id="random-class" className="shadow-lg p-3 bg-body rounded">
+            {showAlert && (
                 <CustomAlert
-                    variant={showAlert.variant || 'info'}
-                    message={showAlert.message || ''}
-                    show={showAlert.show}
-                    onClose={() => setShowAlert({
-                        show: false
-                    })}
+                    variant="success"
+                    message="Code copied to clipboard!"
+                    onClose={() => setShowAlert(false)}
                 />
-                <Inventory seed={seed} onClick={handleClick} toggleCommand={toggleCommand} invItems={items} settings={settings} />
-                {showCommand && <hr />}
-                {showCommand && ( // Conditionally render the code row
-                    <Row id="give-command" className="justify-content-md-center">
-                        <Col md={8}>
-                            <code ref={codeRef}>
-                                {code}
-                            </code>
-                        </Col>
-                        <Col xs={12} className="text-center mt-2">
-                            <Button variant="minecraft" onClick={handleCopyCode}>
-                                Copy Code
-                            </Button>
-                        </Col>
-                    </Row>
-                )}
-            </Container>
-        </>
+            )}
+            <Inventory
+                seed={loadout.seed}
+                onClick={handleClick}
+                toggleCommand={toggleCommand}
+                invItems={loadout.items}
+                settings={settings}
+            />
+            {showCommand && <hr />}
+            {showCommand && (
+                <Row id="give-command" className="justify-content-md-center">
+                    <Col md={8}>
+                        <code ref={codeRef}>{loadout.code}</code>
+                    </Col>
+                    <Col xs={12} className="text-center mt-2">
+                        <Button variant="minecraft" onClick={handleCopyCode}>
+                            Copy Code
+                        </Button>
+                    </Col>
+                </Row>
+            )}
+        </Container>
     );
 }
-
-
-function fetchLoadoutData(setData, setContainerClass, craftSettings) {
-    try {
-        const items: MinecraftItem[] = fetchItems(craftSettings.rangeValue);
-        const seed = generateSeed();
-        let code = '/give @s ';
-
-        items.forEach((item: MinecraftItem) => {
-            code += `${item.item_id} ${item.amount > 1 ? item.amount : ''} `;
-        });
-
-
-        setData({
-            seed,
-            items,
-            code
-        });
-        setContainerClass("");
-    } catch (error: any) {
-        console.error(error.message); // Handle errors centrally
-    }
-}
-
 
 export default Loadout;
