@@ -2,16 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 //helpers
 import { fetchArmorType } from '@/helpers/fetchArmorType';
+//Types
+import { MinecraftItem, MinecraftSettings } from '../../types/Minecraft';
 
-const Armor: React.FC = () => {
-    const armor = {
-        helmet: fetchArmorType('helmet'),
-        chestplate: fetchArmorType('chestplate'),
-        leggings: fetchArmorType('leggings'),
-        boots: fetchArmorType('boots'),
-    };
+interface ArmorProps {
+    settings: MinecraftSettings;
+    reRollCount: number;
+}
 
-    console.log('armor', armor);
+const Armor: React.FC<ArmorProps> = ({ settings, reRollCount }) => {
+    const [armor, setArmor] = useState<Record<string, MinecraftItem | null>>({
+        helmet: null,
+        chestplate: null,
+        leggings: null,
+        boots: null,
+    });
+
+    useEffect(() => {
+        const fetchData = () => {
+            if (settings.rollArmor) {
+                setArmor({
+                    helmet: fetchArmorType('helmet'),
+                    chestplate: fetchArmorType('chestplate'),
+                    leggings: fetchArmorType('leggings'),
+                    boots: fetchArmorType('boots'),
+                });
+            } else {
+                setArmor({
+                    helmet: null,
+                    chestplate: null,
+                    leggings: null,
+                    boots: null,
+                });
+            }
+        };
+
+        fetchData();
+    }, [reRollCount]);
 
     return (
         <div className="armor-slots-col">

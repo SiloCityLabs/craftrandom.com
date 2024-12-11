@@ -22,19 +22,32 @@ interface InventoryProps {
 }
 
 function Inventory(props: InventoryProps) {
+    //Roll Click
+    const [reRollCount, setReRollCount] = useState(0);
+    const handleRollClick = () => {
+        props.onClick();
+        setReRollCount(prevCount => prevCount + 1);
+    };
     //Settings
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(!showModal);
     const handleSave = () => {
         props.settings.rangeValue = rangeValue;
+        props.settings.rollArmor = rollArmor;
         setLocalStorage('craftRandomSettings', props.settings);
         handleModal();
     };
-    //Range
-    const [rangeValue, setRangeValue] = useState(props.settings.rangeValue); // Initial value
+    //rangeValue
+    const [rangeValue, setRangeValue] = useState(props.settings.rangeValue);
 
     const handleRangeChange = (event) => {
         setRangeValue(parseInt(event.target.value, 10));
+    };
+    //rollArmor
+    const [rollArmor, setRollArmor] = useState(props.settings.rollArmor);
+
+    const handleRollArmorChange = (event) => {
+        setRollArmor(event.target.checked);
     };
 
     return (
@@ -44,7 +57,7 @@ function Inventory(props: InventoryProps) {
             </div>
             <hr />
             <div className="top-row">
-                <Armor />
+                <Armor settings={props.settings} reRollCount={reRollCount} />
                 <div className="skin-slot">
                     <Image
                         src={`/images/steve.webp`}
@@ -90,7 +103,7 @@ function Inventory(props: InventoryProps) {
                             id='rollBtn'
                             variant="light"
                             className="win98-button action-button"
-                            onClick={props.onClick}
+                            onClick={handleRollClick}
                         >
                             <FontAwesomeIcon icon={faDice} size="2x" />
                         </Button>
@@ -106,13 +119,24 @@ function Inventory(props: InventoryProps) {
             >
                 <Row>
                     <Col>
-                        <Form.Label htmlFor="my-range">Inventory Range ({rangeValue})</Form.Label>
+                        <Form.Label htmlFor="rangeValue">Inventory Range ({rangeValue})</Form.Label>
                         <Form.Range
-                            id="my-range"
+                            id="rangeValue"
                             min={0}
                             max={32}
                             value={rangeValue}
                             onChange={handleRangeChange}
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Label htmlFor="rollArmor">Always roll armor:</Form.Label>
+                        <Form.Check
+                            type="switch"
+                            id="rollArmor"
+                            onChange={handleRollArmorChange}
+                            checked={rollArmor}
                         />
                     </Col>
                 </Row>

@@ -13,7 +13,7 @@ import { setLocalStorage } from "../helpers/setLocalStorage";
 //Types
 import { MinecraftItem, MinecraftSettings } from "../types/Minecraft";
 
-const defaultSettings: MinecraftSettings = { rangeValue: 36, showCommand: true };
+const defaultSettings: MinecraftSettings = { rangeValue: 36, showCommand: true, rollArmor: true };
 
 function Loadout() {
     const [isLoading, setIsLoading] = useState(true);
@@ -38,11 +38,12 @@ function Loadout() {
     useEffect(() => {
         const fetchData = async () => {
             const storedSettings = getLocalStorage('craftRandomSettings') ?? settings;
+            const completeSettings = { ...defaultSettings, ...storedSettings };
 
-            setSettings(storedSettings);
-            setShowCommand(storedSettings.showCommand);
+            setSettings(completeSettings);
+            setShowCommand(completeSettings.showCommand);
 
-            await fetchLoadoutData(setData, setContainerClass, storedSettings); // Wait for data fetching
+            await fetchLoadoutData(setData, setContainerClass, completeSettings); // Wait for data fetching
             setIsLoading(false); // Update isLoading after data is fetched
         };
 

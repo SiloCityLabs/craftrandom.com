@@ -19,4 +19,5 @@ type MinecraftItemAddInfo = {
 export type MinecraftSettings = {
     rangeValue: number;
     showCommand: boolean;
+    rollArmor: boolean;
 }
