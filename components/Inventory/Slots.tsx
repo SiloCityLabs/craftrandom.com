@@ -1,19 +1,25 @@
 import React from 'react';
+import { MinecraftItem } from '../../types/Minecraft';
+import { Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 interface SlotsProps {
-    // You can add props here if needed, like an array of items to display
-    // items: Item[];
+    items: MinecraftItem[];
 }
 
-const Slots: React.FC<SlotsProps> = ({ /* items */ }) => {
+const Slots: React.FC<SlotsProps> = ({ items }) => {
+    let itemCount = 0;
+
     return (
         <div>
             {[...Array(4)].map((_, rowIndex) => (
                 <div key={rowIndex} className="inv-row">
                     {Array.from({ length: 9 }).map((_, slotIndex) => (
                         <div key={slotIndex} className="inventory-slot">
-                            {/* You can access items here using items[rowIndex * 9 + slotIndex] */}
-                            {/* Example: {items[rowIndex * 9 + slotIndex]?.name} */}
+                            <Image
+                                src={`/images/items/${items[itemCount].image}`}
+                                alt={items[itemCount].name}
+                                className="mc-image"
+                            />
                         </div>
                     ))}
                 </div>

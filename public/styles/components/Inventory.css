@@ -8,6 +8,14 @@
     margin: 0 auto;
 }
 
+#worldSeed {
+    color: white;
+}
+
+.inventory-container hr {
+    color: #888;
+}
+
 .inventory-slot,
 .armor-slots,
 .off-hand {
@@ -16,6 +24,9 @@
     background-color: #555;
     border: 1px solid #888;
     margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .top-row {
