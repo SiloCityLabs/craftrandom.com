@@ -49,7 +49,12 @@ function Inventory(props: InventoryProps) {
                     <div className="armor-slots">{/* Leggings */}</div>
                     <div className="armor-slots">{/* Boots */}</div>
                 </div>
-                <div className="skin-slot"></div>
+                <div className="skin-slot">
+                    <Image
+                        src={`/images/steve.webp`}
+                        alt="steve"
+                    />
+                </div>
                 <div className="off-hand-col">
                     <div className="off-hand">{/* Off-hand item */}</div>
                 </div>

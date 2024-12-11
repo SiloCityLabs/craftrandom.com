@@ -54,6 +54,13 @@
     margin: 2px 2px 0px 2px;
     flex-grow: 1;
     max-width: 212px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.skin-slot img {
+    max-height: 200px;
 }
 
 .off-hand-col {

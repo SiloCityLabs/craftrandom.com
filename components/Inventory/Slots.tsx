@@ -13,15 +13,24 @@ const Slots: React.FC<SlotsProps> = ({ items }) => {
         <div>
             {[...Array(4)].map((_, rowIndex) => (
                 <div key={rowIndex} className="inv-row">
-                    {Array.from({ length: 9 }).map((_, slotIndex) => (
-                        <div key={slotIndex} className="inventory-slot">
-                            <Image
-                                src={`/images/items/${items[itemCount].image}`}
-                                alt={items[itemCount].name}
-                                className="mc-image"
-                            />
-                        </div>
-                    ))}
+                    {Array.from({ length: 9 }, (_, slotIndex) => {
+                        const currentItem = items[itemCount];
+                        itemCount++;
+
+                        if (currentItem) { // Check if currentItem is defined
+                            return (
+                                <div key={slotIndex} className="inventory-slot">
+                                    <Image
+                                        src={`/images/items/${currentItem.image}`}
+                                        alt={currentItem.name}
+                                        className="mc-image"
+                                    />
+                                </div>
+                            );
+                        } else {
+                            return <div key={slotIndex} className="inventory-slot"></div>; // Empty slot
+                        }
+                    })}
                 </div>
             ))}
         </div>
