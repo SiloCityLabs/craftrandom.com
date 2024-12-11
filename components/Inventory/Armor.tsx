@@ -38,7 +38,7 @@ const Armor: React.FC<ArmorProps> = ({ settings, reRollCount }) => {
         };
 
         fetchData();
-    }, [reRollCount]);
+    }, [reRollCount, settings.rollArmor]);
 
     return (
         <div className="armor-slots-col">

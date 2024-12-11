@@ -35,6 +35,19 @@ function Loadout() {
         code: "",
     });
 
+    const generateLoadout = async (currentSettings: MinecraftSettings) => {
+        try {
+            const items = fetchItems(currentSettings.rangeValue);
+            const seed = generateSeed();
+            const code = generateGiveCommand(items);
+
+            setLoadout({ seed, items, code });
+        } catch (error: any) {
+            console.error("Error generating loadout:", error.message);
+        }
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const fetchData = async () => {
             const storedSettings = getLocalStorage('craftRandomSettings') ?? settings;
@@ -49,18 +62,6 @@ function Loadout() {
 
         fetchData();
     }, []);
-
-    const generateLoadout = async (currentSettings: MinecraftSettings) => {
-        try {
-            const items = fetchItems(currentSettings.rangeValue);
-            const seed = generateSeed();
-            const code = generateGiveCommand(items);
-
-            setLoadout({ seed, items, code });
-        } catch (error: any) {
-            console.error("Error generating loadout:", error.message);
-        }
-    };
 
     const generateGiveCommand = (items: MinecraftItem[]) => {
         return '/give @s ' + items.map(item => `${item.item_id} ${item.amount > 1 ? item.amount : ''}`).join(' ');
@@ -92,6 +93,7 @@ function Loadout() {
         <Container id="random-class" className="shadow-lg p-3 bg-body rounded">
             {showAlert && (
                 <CustomAlert
+                    show={showAlert}
                     variant="success"
                     message="Code copied to clipboard!"
                     onClose={() => setShowAlert(false)}
