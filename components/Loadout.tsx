@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 //Components
-import MinecraftInventory from "../components/MinecraftInventory";
+import Inventory from "../components/Inventory";
 import CustomAlert from "./bootstrap/CustomAlert";
 //Helpers
 import { generateSeed } from "../helpers/generateSeed";
@@ -97,7 +97,7 @@ function Loadout() {
                         show: false
                     })}
                 />
-                <MinecraftInventory seed={seed} onClick={handleClick} toggleCommand={toggleCommand} invItems={items} settings={settings} />
+                <Inventory seed={seed} onClick={handleClick} toggleCommand={toggleCommand} invItems={items} settings={settings} />
                 {showCommand && <hr />}
                 {showCommand && ( // Conditionally render the code row
                     <Row id="give-command" className="justify-content-md-center">
