@@ -43,8 +43,8 @@ function Loadout() {
             setSettings(completeSettings);
             setShowCommand(completeSettings.showCommand);
 
-            await fetchLoadoutData(setData, setContainerClass, completeSettings); // Wait for data fetching
-            setIsLoading(false); // Update isLoading after data is fetched
+            await fetchLoadoutData(setData, setContainerClass, completeSettings);
+            setIsLoading(false);
         };
 
         fetchData();
