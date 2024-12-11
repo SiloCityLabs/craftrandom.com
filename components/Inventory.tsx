@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
+import { Row, Col, Button, Image, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons';
 //Css
@@ -7,6 +7,7 @@ import '../public/styles/components/Inventory.css';
 //Types
 import { MinecraftItem, MinecraftSettings } from '../types/Minecraft';
 //Components
+import Armor from './Inventory/Armor';
 import Slots from './Inventory/Slots';
 import CustomModal from './bootstrap/CustomModal';
 //Helpers
@@ -43,12 +44,7 @@ function Inventory(props: InventoryProps) {
             </div>
             <hr />
             <div className="top-row">
-                <div className="armor-slots-col">
-                    <div className="armor-slots">{/* Helmet */}</div>
-                    <div className="armor-slots">{/* Chestplate */}</div>
-                    <div className="armor-slots">{/* Leggings */}</div>
-                    <div className="armor-slots">{/* Boots */}</div>
-                </div>
+                <Armor />
                 <div className="skin-slot">
                     <Image
                         src={`/images/steve.webp`}
@@ -105,7 +101,7 @@ function Inventory(props: InventoryProps) {
             <CustomModal
                 show={showModal}
                 onClose={handleModal}
-                onSave={handleSave} // Pass the handleSave function
+                onSave={handleSave}
                 title="Settings"
             >
                 <Row>
@@ -113,8 +109,8 @@ function Inventory(props: InventoryProps) {
                         <Form.Label htmlFor="my-range">Inventory Range ({rangeValue})</Form.Label>
                         <Form.Range
                             id="my-range"
-                            min={0} // Set minimum value
-                            max={36} // Set maximum value
+                            min={0}
+                            max={32}
                             value={rangeValue}
                             onChange={handleRangeChange}
                         />

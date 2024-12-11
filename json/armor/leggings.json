@@ -1,8 +1,55 @@
 [
-    "Leather Pants",
-    "Chainmail Leggings",
-    "Iron Leggings",
-    "Golden Leggings",
-    "Diamond Leggings",
-    "Netherite Leggings"
+    {
+        "name": "Leather Pants",
+        "image": "leather_leggings.png",
+        "item_id": "minecraft:leather_leggings",
+        "additional_info": {
+            "numerical_id": "300",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Chainmail Leggings",
+        "image": "chainmail_leggings.png",
+        "item_id": "minecraft:chainmail_leggings",
+        "additional_info": {
+            "numerical_id": "304",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Iron Leggings",
+        "image": "iron_leggings.png",
+        "item_id": "minecraft:iron_leggings",
+        "additional_info": {
+            "numerical_id": "308",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Golden Leggings",
+        "image": "golden_leggings.png",
+        "item_id": "minecraft:golden_leggings",
+        "additional_info": {
+            "numerical_id": "316",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Diamond Leggings",
+        "image": "diamond_leggings.png",
+        "item_id": "minecraft:diamond_leggings",
+        "additional_info": {
+            "numerical_id": "312",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Netherite Leggings",
+        "image": "netherite_leggings.png",
+        "item_id": "minecraft:netherite_leggings",
+        "additional_info": {
+            "stackable": "No"
+        }
+    }
 ]

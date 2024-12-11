@@ -1,9 +1,64 @@
 [
-    "Leather Cap",
-    "Chainmail Helmet",
-    "Iron Helmet",
-    "Golden Helmet",
-    "Diamond Helmet",
-    "Netherite Helmet",
-    "Turtle Shell"
+    {
+        "name": "Leather Cap",
+        "image": "leather_helmet.png",
+        "item_id": "minecraft:leather_helmet",
+        "additional_info": {
+            "numerical_id": "298",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Chainmail Helmet",
+        "image": "chainmail_helmet.png",
+        "item_id": "minecraft:chainmail_helmet",
+        "additional_info": {
+            "numerical_id": "302",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Iron Helmet",
+        "image": "iron_helmet.png",
+        "item_id": "minecraft:iron_helmet",
+        "additional_info": {
+            "numerical_id": "306",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Golden Helmet",
+        "image": "golden_helmet.png",
+        "item_id": "minecraft:golden_helmet",
+        "additional_info": {
+            "numerical_id": "314",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Diamond Helmet",
+        "image": "diamond_helmet.png",
+        "item_id": "minecraft:diamond_helmet",
+        "additional_info": {
+            "numerical_id": "310",
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Netherite Helmet",
+        "image": "netherite_helmet.png",
+        "item_id": "minecraft:netherite_helmet",
+        "additional_info": {
+            "stackable": "No"
+        }
+    },
+    {
+        "name": "Turtle Shell",
+        "image": "turtle_helmet.png",
+        "item_id": "minecraft:turtle_helmet",
+        "additional_info": {
+            "max_stack_size": "64",
+            "stackable": "Yes"
+        }
+    }
 ]
