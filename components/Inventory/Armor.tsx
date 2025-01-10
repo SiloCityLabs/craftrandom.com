@@ -29,10 +29,10 @@ const Armor: React.FC<ArmorProps> = ({ settings, reRollCount }) => {
                 });
             } else {
                 setArmor({
-                    helmet: null,
-                    chestplate: null,
-                    leggings: null,
-                    boots: null,
+                    helmet: Math.random() < 0.5 ? fetchArmorType('helmet') : null,
+                    chestplate: Math.random() < 0.5 ? fetchArmorType('chestplate') : null,
+                    leggings: Math.random() < 0.5 ? fetchArmorType('leggings') : null,
+                    boots: Math.random() < 0.5 ? fetchArmorType('boots') : null,
                 });
             }
         };

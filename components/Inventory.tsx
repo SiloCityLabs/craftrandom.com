@@ -139,7 +139,10 @@ function Inventory(props: InventoryProps) {
                 </Row>
                 <Row>
                     <Col>
-                        <Form.Label htmlFor="rollArmor">Always roll armor:</Form.Label>
+                        <Form.Label htmlFor="rollArmor">
+                            Always roll armor: <br />
+                            <small className='smallText text-muted'>* If not checked there will be a random chance for armor to be rolled</small>
+                        </Form.Label>
                         <Form.Check
                             type="switch"
                             id="rollArmor"
