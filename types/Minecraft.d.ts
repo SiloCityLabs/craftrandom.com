@@ -21,3 +21,11 @@ export type MinecraftSettings = {
     showCommand: boolean;
     rollArmor: boolean;
 }
+
+export type InventoryArmor = {
+    helmet: MinecraftItem | null;
+    chestplate: MinecraftItem | null;
+    leggings: MinecraftItem | null;
+    boots: MinecraftItem | null;
+    shield: MinecraftItem | null;
+}
