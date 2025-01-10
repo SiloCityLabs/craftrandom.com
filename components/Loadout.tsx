@@ -12,6 +12,8 @@ import { getLocalStorage } from "../helpers/getLocalStorage";
 import { setLocalStorage } from "../helpers/setLocalStorage";
 //Types
 import { MinecraftItem, MinecraftSettings } from "../types/Minecraft";
+//Utils
+import { sendEvent } from "@/utils/gtag";
 
 const defaultSettings: MinecraftSettings = {
     rangeValue: 36,
@@ -36,6 +38,12 @@ function Loadout() {
     });
 
     const generateLoadout = async (currentSettings: MinecraftSettings) => {
+        sendEvent("button_click", {
+            button_id: "generateLoadout",
+            label: "InventoryGenerateLoadout",
+            category: "Inventory",
+        });
+
         try {
             const items = fetchItems(currentSettings.rangeValue);
             const seed = generateSeed();
@@ -75,6 +83,12 @@ function Loadout() {
     };
 
     const handleCopyCode = () => {
+        sendEvent("button_click", {
+            button_id: "handleCopyCode",
+            label: "InventoryCopyCode",
+            category: "Inventory",
+        });
+
         if (codeRef.current) {
             navigator.clipboard.writeText(codeRef.current.textContent || "");
             setShowAlert(true);

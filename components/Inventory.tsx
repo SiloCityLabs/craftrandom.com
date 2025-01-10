@@ -12,6 +12,8 @@ import Slots from './Inventory/Slots';
 import CustomModal from './bootstrap/CustomModal';
 //Helpers
 import { setLocalStorage } from '../helpers/setLocalStorage';
+//Utils
+import { sendEvent } from "@/utils/gtag";
 
 interface InventoryProps {
     seed: string;
@@ -32,6 +34,12 @@ function Inventory(props: InventoryProps) {
     const [showModal, setShowModal] = useState(false);
     const handleModal = () => setShowModal(!showModal);
     const handleSave = () => {
+        sendEvent("button_click", {
+            button_id: "saveSettings",
+            label: "InventorySaveSettings",
+            category: "Inventory",
+        });
+
         props.settings.rangeValue = rangeValue;
         props.settings.rollArmor = rollArmor;
         setLocalStorage('craftRandomSettings', props.settings);
