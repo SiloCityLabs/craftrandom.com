@@ -127,6 +127,10 @@
     height: 50px;
 }
 
+.smallText {
+    font-size: .8em;
+}
+
 /* Mobile Styling */
 @media (max-width: 768px) {
 

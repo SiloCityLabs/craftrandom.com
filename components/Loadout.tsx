@@ -8,10 +8,11 @@ import CustomAlert from "./bootstrap/CustomAlert";
 //Helpers
 import { generateSeed } from "../helpers/generateSeed";
 import { fetchItems } from "../helpers/fetchItems";
+import { fetchArmor } from "../helpers/fetchArmor";
 import { getLocalStorage } from "../helpers/getLocalStorage";
 import { setLocalStorage } from "../helpers/setLocalStorage";
 //Types
-import { MinecraftItem, MinecraftSettings } from "../types/Minecraft";
+import { MinecraftItem, MinecraftSettings, InventoryArmor } from "../types/Minecraft";
 //Utils
 import { sendEvent } from "@/utils/gtag";
 
@@ -31,10 +32,12 @@ function Loadout() {
         seed: string;
         items: MinecraftItem[];
         code: string;
+        armor: InventoryArmor;
     }>({
         seed: "",
         items: [],
         code: "",
+        armor: {} as InventoryArmor,
     });
 
     const generateLoadout = async (currentSettings: MinecraftSettings) => {
@@ -45,11 +48,12 @@ function Loadout() {
         });
 
         try {
+            const armor = fetchArmor(currentSettings.rollArmor);
             const items = fetchItems(currentSettings.rangeValue);
             const seed = generateSeed();
-            const code = generateGiveCommand(items);
+            const code = generateGiveCommand(items, armor);
 
-            setLoadout({ seed, items, code });
+            setLoadout({ seed, items, code, armor });
         } catch (error: any) {
             console.error("Error generating loadout:", error.message);
         }
@@ -71,8 +75,19 @@ function Loadout() {
         fetchData();
     }, []);
 
-    const generateGiveCommand = (items: MinecraftItem[]) => {
-        return '/give @s ' + items.map(item => `${item.item_id} ${item.amount > 1 ? item.amount : ''}`).join(' ');
+    const generateGiveCommand = (items: MinecraftItem[], armor: InventoryArmor) => {
+        let command = '/give @s ';
+
+        // Items command generation (unchanged)
+        command += items.map(item => `${item.item_id} ${item.amount > 1 ? item.amount : ''}`).join(' ');
+
+        // Armor command generation
+        const armorPieces = Object.values(armor).filter(piece => piece !== null) as MinecraftItem[];
+        if (armorPieces.length > 0) {
+            command += ' ' + armorPieces.map(piece => `${piece.item_id}`).join(' ');
+        }
+
+        return command;
     };
 
     const toggleCommand = () => {
@@ -114,6 +129,7 @@ function Loadout() {
                 />
             )}
             <Inventory
+                armor={loadout.armor}
                 seed={loadout.seed}
                 onClick={handleClick}
                 toggleCommand={toggleCommand}

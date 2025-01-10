@@ -5,7 +5,7 @@ import { faDice, faGears, faClipboard } from '@fortawesome/free-solid-svg-icons'
 //Css
 import '../public/styles/components/Inventory.css';
 //Types
-import { MinecraftItem, MinecraftSettings } from '../types/Minecraft';
+import { MinecraftItem, MinecraftSettings, InventoryArmor } from '../types/Minecraft';
 //Components
 import Armor from './Inventory/Armor';
 import Slots from './Inventory/Slots';
@@ -16,6 +16,7 @@ import { setLocalStorage } from '../helpers/setLocalStorage';
 import { sendEvent } from "@/utils/gtag";
 
 interface InventoryProps {
+    armor: InventoryArmor;
     seed: string;
     onClick: () => void;
     toggleCommand: () => void;
@@ -65,7 +66,7 @@ function Inventory(props: InventoryProps) {
             </div>
             <hr />
             <div className="top-row">
-                <Armor settings={props.settings} reRollCount={reRollCount} />
+                <Armor armor={props.armor} />
                 <div className="skin-slot">
                     <Image
                         src={`/images/steve.webp`}
@@ -73,7 +74,20 @@ function Inventory(props: InventoryProps) {
                     />
                 </div>
                 <div className="off-hand-col">
-                    <div className="off-hand">{/* Off-hand item */}</div>
+                    <div className="off-hand">
+                        {props.armor?.shield && (
+                            <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip>{props.armor?.shield.name}</Tooltip>}
+                            >
+                                <Image
+                                    src={`/images/items/${props.armor?.shield.image}`}
+                                    alt={props.armor?.shield.name}
+                                    className="mc-image"
+                                />
+                            </OverlayTrigger>
+                        )}
+                    </div>
                 </div>
                 <div className="actions">
                     <div className="top-actions">
@@ -131,7 +145,7 @@ function Inventory(props: InventoryProps) {
                         <Form.Range
                             id="rangeValue"
                             min={0}
-                            max={32}
+                            max={31}
                             value={rangeValue}
                             onChange={handleRangeChange}
                         />
@@ -139,7 +153,10 @@ function Inventory(props: InventoryProps) {
                 </Row>
                 <Row>
                     <Col>
-                        <Form.Label htmlFor="rollArmor">Always roll armor:</Form.Label>
+                        <Form.Label htmlFor="rollArmor">
+                            Always roll armor: <br />
+                            <small className='smallText text-muted'>* If not checked there will be a random chance for armor to be rolled</small>
+                        </Form.Label>
                         <Form.Check
                             type="switch"
                             id="rollArmor"
